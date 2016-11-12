@@ -17,10 +17,9 @@ def getTopFive(data):
     return topFive
 
 
-
-text = "hi bob why are you at cal hacks. bob you should go to sleep. bob do it now"
-data = {}
-lookThroughWords(data, text)
-best = getTopFive(data)
-for item in best:
-    print(item[0] + " has count:" + str(item[1]))
+def search(text):
+    data = {}
+    lookThroughWords(data, text)
+    best = getTopFive(data)
+    for item in best:
+        print(item[0] + " has count:" + str(item[1]))
