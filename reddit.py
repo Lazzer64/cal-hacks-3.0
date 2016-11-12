@@ -19,19 +19,22 @@ token      = response['access_token']
 token_type = response['token_type']
 
 headers   = {'Authorization': token_type+' '+token, 'User-Agent': 'client'}
-response  = requests.get('https://oauth.reddit.com/user/'+username+'/comments', headers=headers).json()
+response  = requests.get('https://oauth.reddit.com/user/'+username+'/comments', headers=headers, params={'limit':'100'}).json()
 
 posts = response.get('data')
+
+# from IPython import embed
+# embed()
 
 texts = []
 for post in posts.get('children'):
     texts.append(post.get('data').get('body'))
 
 excluded = ['a', 'and', 'or', 'the', 'if', 'i', 'when', 'to', 'in', 'for',
-    'it', 'on', 'his', 'her', 'he', 'she', 'they', 'your', 'us', 'our', 'do',
-    'more', 'was', 'were', 'be', 'is', 'are', 'but', 'you', 'so', 'not', 'of',
-    "it's", 'its', 'this', 'that', 'why', 'how', 'who', 'what', 'when', 'as',
-    'has', 'had', 'my', 'with', 'could', 'should', 'would']
+    'it', 'on', 'his', 'her', 'he', 'she', 'they', 'their', 'your', 'us', 'our',
+    'do', 'more', 'was', 'were', 'be', 'is', 'are', 'but', 'you', 'so', 'not',
+    'of', "it's", 'its', 'this', 'that', 'why', 'how', 'who', 'what', 'when',
+    'as', 'has', 'had', 'have', 'my', 'with', 'could', 'should', 'would']
 results = search(texts, excluded, numResults)
 for item in results:
     print item
