@@ -5,9 +5,11 @@ def lookThroughWords(data, text):
         else:
             data[word] += 1
 
-def getTopFive(data):
+def getTopFive(data, forbidden):
     topFive = []
     for word, count in data.items():
+        if word in forbidden:
+            next
         word = word.replace(",", "")
         word = word.replace(".", "")
         topFive.append((word, count))
@@ -22,5 +24,4 @@ def search(textList):
     for text in textList:
         lookThroughWords(data, text)
     best = getTopFive(data)
-    for item in best:
-        print(item[0] + " has count:" + str(item[1]))
+    return best
