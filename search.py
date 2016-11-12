@@ -1,5 +1,6 @@
 def lookThroughWords(data, text):
     for word in text.split():
+        word = word.lower()
         if data.get(word, 0) == 0:
             data[word] = 1
         else:
@@ -7,11 +8,11 @@ def lookThroughWords(data, text):
 
 def getTopFive(data, forbidden):
     topFive = []
+    for i in range(len(forbidden)):
+        forbidden[i] = forbidden[i].lower()
     for word, count in data.items():
         if word in forbidden:
-            print("forbidden")
             continue
-        print(word)
         word = word.replace(",", "")
         word = word.replace(".", "")
         topFive.append((word, count))
