@@ -5,7 +5,10 @@ from search import *
 auth = open('auth','r') # file named auth with clientid on first line and secret on second line
 clientID = auth.readline()[:-1]
 secret   = auth.readline()[:-1]
-username = 'covie21'
+username = raw_input('Enter your name: ')
+username = str(username)
+numResults = raw_input('Return how many? ')
+numResults = int(numResults)
 
 client_auth = requests.auth.HTTPBasicAuth(clientID,secret)
 post_data   = {'grant_type':'client_credentials'}
@@ -30,9 +33,11 @@ texts = []
 for post in posts.get('children'):
     texts.append(post.get('data').get('body'))
 
-excluded = ['a', 'and', 'or', 'the', 'if', 'i', 'when', 'to']
-results = search(texts, excluded)
-print len(texts)
+excluded = ['a', 'and', 'or', 'the', 'if', 'i', 'when', 'to', 'in', 'for',
+    'it', 'on', 'his', 'her', 'he', 'she', 'they', 'their', 'your', 'us', 'our',
+    'do', 'more', 'was', 'were', 'be', 'is', 'are', 'but', 'you', 'so', 'not',
+    'of', "it's", 'its', 'this', 'that', 'why', 'how', 'who', 'what', 'when',
+    'as', 'has', 'had', 'have', 'my', 'with', 'could', 'should', 'would']
+results = search(texts, excluded, numResults)
 for item in results:
     print item
-
