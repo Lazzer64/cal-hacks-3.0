@@ -19,9 +19,9 @@ def getTopFive(data, forbidden):
     return topFive
 
 
-def search(textList):
+def search(textList, forbidden):
     data = {}
     for text in textList:
         lookThroughWords(data, text)
-    best = getTopFive(data)
+    best = getTopFive(data, forbidden)
     return best
