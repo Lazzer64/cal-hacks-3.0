@@ -18,8 +18,11 @@ response    = requests.post('https://www.reddit.com/api/v1/access_token', auth=c
 token      = response['access_token']
 token_type = response['token_type']
 
+sort      = 'top' # hot, new, top, controversial
+t         = 'all' # hour, day, week, month, year, all
+params    = {'limit':'100', 'sort':sort, 't':t}
 headers   = {'Authorization': token_type+' '+token, 'User-Agent': 'client'}
-response  = requests.get('https://oauth.reddit.com/user/'+username+'/comments', headers=headers, params={'limit':'100'}).json()
+response  = requests.get('https://oauth.reddit.com/user/'+username+'/comments', headers=headers, params=params).json()
 
 posts = response.get('data')
 
