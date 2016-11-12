@@ -17,9 +17,10 @@ def getTopFive(data):
     return topFive
 
 
-def search(text):
+def search(textList):
     data = {}
-    lookThroughWords(data, text)
+    for text in textList:
+        lookThroughWords(data, text)
     best = getTopFive(data)
     for item in best:
         print(item[0] + " has count:" + str(item[1]))
