@@ -9,9 +9,7 @@ def getTopFive(data, forbidden):
     topFive = []
     for word, count in data.items():
         if word in forbidden:
-            print("forbidden")
             continue
-        print(word)
         word = word.replace(",", "")
         word = word.replace(".", "")
         topFive.append((word, count))
