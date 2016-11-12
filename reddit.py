@@ -1,5 +1,6 @@
 import requests
 import requests.auth
+from search import *
 
 auth = open('auth','r') # file named auth with clientid on first line and secret on second line
 clientID = auth.readline()[:-1]
@@ -14,11 +15,17 @@ response    = requests.post('https://www.reddit.com/api/v1/access_token', auth=c
 token      = response['access_token']
 token_type = response['token_type']
 
-headers  = {'Authorization': token_type+' '+token, 'User-Agent': 'client'}
-response = requests.get('https://oauth.reddit.com/user/'+username+'/comments', headers=headers).json()
+headers   = {'Authorization': token_type+' '+token, 'User-Agent': 'client'}
+response  = requests.get('https://oauth.reddit.com/user/'+username+'/comments', headers=headers).json()
 
 posts = response.get('data')
 
-list = []
+texts = []
 for post in posts.get('children'):
-    list.append(post.get('data').get('body'))
+    texts.append(post.get('data').get('body'))
+
+excluded = ['a', 'and', 'or', 'the', 'if', 'i', 'when', 'to']
+results = search(texts, excluded)
+for item in results:
+    print item
+
