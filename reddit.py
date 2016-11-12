@@ -16,9 +16,12 @@ token      = response['access_token']
 token_type = response['token_type']
 
 headers   = {'Authorization': token_type+' '+token, 'User-Agent': 'client'}
-response  = requests.get('https://oauth.reddit.com/user/'+username+'/comments', headers=headers).json()
+response  = requests.get('https://oauth.reddit.com/user/'+username+'/comments', headers=headers, params={'limit':'100'}).json()
 
 posts = response.get('data')
+
+# from IPython import embed
+# embed()
 
 texts = []
 for post in posts.get('children'):
@@ -26,6 +29,7 @@ for post in posts.get('children'):
 
 excluded = ['a', 'and', 'or', 'the', 'if', 'i', 'when', 'to']
 results = search(texts, excluded)
+print len(texts)
 for item in results:
     print item
 
