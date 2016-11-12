@@ -34,7 +34,8 @@ excluded = ['a', 'and', 'or', 'the', 'if', 'i', 'when', 'to', 'in', 'for',
     'it', 'on', 'his', 'her', 'he', 'she', 'they', 'their', 'your', 'us', 'our',
     'do', 'more', 'was', 'were', 'be', 'is', 'are', 'but', 'you', 'so', 'not',
     'of', "it's", 'its', 'this', 'that', 'why', 'how', 'who', 'what', 'when',
-    'as', 'has', 'had', 'have', 'my', 'with', 'could', 'should', 'would']
+    'as', 'has', 'had', 'have', 'my', 'with', 'could', 'should', 'would', 'me',
+    'we']
 results = search(texts, excluded, numResults)
 for item in results:
     print item
