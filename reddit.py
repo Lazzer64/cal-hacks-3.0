@@ -1,7 +1,7 @@
 import requests
 import requests.auth
 
-auth = open('auth','r')
+auth = open('auth','r') # file named auth with clientid on first line and secret on second line
 clientID = auth.readline()[:-1]
 secret   = auth.readline()[:-1]
 username = 'covie21'
@@ -16,3 +16,9 @@ token_type = response['token_type']
 
 headers  = {'Authorization': token_type+' '+token, 'User-Agent': 'client'}
 response = requests.get('https://oauth.reddit.com/user/'+username+'/comments', headers=headers).json()
+
+posts = response.get('data')
+
+list = []
+for post in posts.get('children'):
+    list.append(post.get('data').get('body'))
