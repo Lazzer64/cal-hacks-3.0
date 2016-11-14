@@ -1,1 +1,2 @@
 requests
+watson-developer-cloud

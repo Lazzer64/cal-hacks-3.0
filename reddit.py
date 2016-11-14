@@ -1,14 +1,16 @@
 import requests
 import requests.auth
 from search import *
+from analysis import *
 
 auth = open('auth','r') # file named auth with clientid on first line and secret on second line
-clientID = auth.readline()[:-1]
-secret   = auth.readline()[:-1]
-username = raw_input('Enter your name: ')
-username = str(username)
-numResults = raw_input('Return how many? ')
-numResults = int(numResults)
+clientID   = auth.readline()[:-1]
+secret     = auth.readline()[:-1]
+watson_cid = auth.readline()[:-1]
+watson_sec = auth.readline()[:-1]
+
+username   = raw_input('Enter Reddit username: ')
+username   = str(username)
 
 client_auth = requests.auth.HTTPBasicAuth(clientID,secret)
 post_data   = {'grant_type':'client_credentials'}
@@ -25,20 +27,8 @@ headers   = {'Authorization': token_type+' '+token, 'User-Agent': 'client'}
 response  = requests.get('https://oauth.reddit.com/user/'+username+'/comments', headers=headers, params=params).json()
 
 posts = response.get('data')
-
-# from IPython import embed
-# embed()
-
 texts = []
 for post in posts.get('children'):
-    texts.append(post.get('data').get('body'))
+    texts.append(post.get('data').get('body').encode('utf-8'))
 
-excluded = ['a', 'and', 'or', 'the', 'if', 'i', 'when', 'to', 'in', 'for',
-    'it', 'on', 'his', 'her', 'he', 'she', 'they', 'their', 'your', 'us', 'our',
-    'do', 'more', 'was', 'were', 'be', 'is', 'are', 'but', 'you', 'so', 'not',
-    'of', "it's", 'its', 'this', 'that', 'why', 'how', 'who', 'what', 'when',
-    'as', 'has', 'had', 'have', 'my', 'with', 'could', 'should', 'would', 'me',
-    'we']
-results = search(texts, excluded, numResults)
-for item in results:
-    print item
+personality(texts, (watson_cid, watson_sec))
